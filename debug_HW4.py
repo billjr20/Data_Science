@@ -1,6 +1,27 @@
 import statistics
 import random
 
+def median_sorted_arrays(A, B, A_left, A_right, B_left, B_right):
+    # Calculate length of the two arrays
+    ALen = A_right - A_left
+    BLen = B_right - B_left
+    
+    # If the length of either array is 1, return the larger of the two elements
+    if ALen <= 1 or BLen <= 1:
+        return (A[A_left] + B[B_left])/2.0
+    
+    # Get the medians of the two arrays
+    mA = A[ALen // 2 + A_left]
+    mB = B[BLen // 2 + B_left]
+    
+    # If the median of A is less than or equal to the median of B,
+    # recursively find the median of the union of the right half of A and the left half of B
+    if mA <= mB:
+        return median_sorted_arrays(A, B, ALen//2 + A_left, A_right, B_left, BLen//2 + B_left)
+    # If the median of A is greater than the median of B,
+    # recursively find the median of the union of the right half of B and the left half of A
+    else:
+        return median_sorted_arrays(A, B, A_left, ALen//2 + A_left, BLen//2 + B_left, B_right)
 
 
 # test case where the bug arises
